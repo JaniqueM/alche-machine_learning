@@ -1,8 +1,21 @@
+
 #!/usr/bin/env python3
-#Module for calculating the cofactor matrix.
+"""Module for calculating the cofactor matrix."""
+
 
 def cofactor(matrix):
     """Calculate the cofactor matrix of a square matrix.
+
+    Pseudocode:
+        1. Check that matrix is a list of lists.
+        2. Check that matrix is non-empty and square.
+        3. If the matrix is 1x1, return [[1]].
+        4. For every element at position (i, j):
+            a. Remove row i and column j.
+            b. Calculate the determinant of the remaining matrix.
+            c. Multiply the determinant by (-1) ** (i + j).
+        5. Add each calculated cofactor to the result matrix.
+        6. Return the cofactor matrix.
 
     Args:
         matrix (list): A list of lists representing a square matrix.
@@ -26,8 +39,36 @@ def cofactor(matrix):
     if n == 1:
         return [[1]]
 
-    minor = __import__('1-minor').minor
-    minor_matrix = minor(matrix)
+    def determinant(mat):
+        """Calculate the determinant using cofactor expansion.
+
+        Args:
+            mat (list): A square matrix.
+
+        Returns:
+            int or float: The determinant of mat.
+        """
+        size = len(mat)
+
+        if size == 1:
+            return mat[0][0]
+
+        if size == 2:
+            return (mat[0][0] * mat[1][1]
+                    - mat[0][1] * mat[1][0])
+
+        det = 0
+
+        for col in range(size):
+            submatrix = [
+                row[:col] + row[col + 1:]
+                for row in mat[1:]
+            ]
+
+            det += ((-1) ** col * mat[0][col]
+                    * determinant(submatrix))
+
+        return det
 
     cofactor_matrix = []
 
@@ -35,9 +76,16 @@ def cofactor(matrix):
         row_cofactors = []
 
         for j in range(n):
-            value = ((-1) ** (i + j)) * minor_matrix[i][j]
+            submatrix = [
+                row[:j] + row[j + 1:]
+                for k, row in enumerate(matrix)
+                if k != i
+            ]
+
+            value = (-1) ** (i + j) * determinant(submatrix)
             row_cofactors.append(value)
 
         cofactor_matrix.append(row_cofactors)
 
     return cofactor_matrix
+
