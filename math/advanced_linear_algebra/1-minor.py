@@ -2,7 +2,6 @@
 #!/usr/bin/env python3
 """Module for calculating the minor matrix."""
 
-
 def minor(matrix):
     """Calculate the minor matrix of a square matrix.
 
