@@ -11,7 +11,8 @@ def definiteness(matrix):
     if not isinstance(matrix, np.ndarray):
         raise TypeError("matrix must be a numpy.ndarray")
 
-    if matrix.ndim != 2 or matrix.shape[0] != matrix.shape[1] or matrix.shape[0] == 0:
+    if (matrix.ndim != 2 or matrix.shape[0] != matrix.shape[1]
+            or matrix.shape[0] == 0):
         return None
 
     # A definiteness test applies to symmetric matrices
@@ -30,3 +31,4 @@ def definiteness(matrix):
         return "Negative semi-definite"
     else:
         return "Indefinite"
+
