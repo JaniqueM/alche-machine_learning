@@ -1,7 +1,5 @@
-
 #!/usr/bin/env python3
-"""Module for calculating the inverse of a matrix."""
-
+#Module for calculating the inverse of a matrix.
 
 def inverse(matrix):
     """Calculate the inverse of a square matrix.
